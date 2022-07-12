@@ -7,7 +7,9 @@
 // let player2Name = document.querySelector('#name--1').innerHTML;
 
 // Selecting Elements
-let mySound = new Audio('move.wav');
+let diceSound = new Audio('move.wav');
+let winSound = new Audio('win.mp3');
+let errorSound = new Audio('error.wav');
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
 const score0El = document.querySelector('#score--0');
@@ -60,7 +62,7 @@ const switchPlayer = function () {
 // Rolling dice functionality
 btnRoll.addEventListener('click', function () {
   if (playing) {
-    mySound.play();
+    diceSound.play();
     // 1. Generate a random dice roll
     const dice = Math.trunc(Math.random() * 6) + 1;
     // 2. Display dice
@@ -76,6 +78,7 @@ btnRoll.addEventListener('click', function () {
         currentScore;
     } else if (dice === 1) {
       //Switch to next player
+      errorSound.play();
       currentScore = 0;
       switchPlayer();
     }
@@ -88,6 +91,7 @@ btnHold.addEventListener('click', function () {
     score0El.textContent = scores[0];
     score1El.textContent = scores[1];
     if (scores[activePlayer] >= 100) {
+      winSound.play();
       playing = false;
       diceEl.classList.add('hidden');
       document
